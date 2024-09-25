@@ -61,9 +61,9 @@ export default function Form() {
 
 
   const handleChange= (evt) => {
-    const {id, value} = evt.target
-    validate(id,value)
-    setValues({...values, [id]: value})
+    const {name, value} = evt.target
+    validate(name,value)
+    setValues({...values, [name]: value})
   }
 
 
@@ -81,28 +81,33 @@ export default function Form() {
       .then(res =>{
         setValues(initialValues)
         setServerSuccess(res.data.message)
-        serverFailure('')
+        setServerFailure('')
+        console.log(res)
       })
       .catch(err =>{
-        serverSuccess('')
+        setServerSuccess('')
         setServerFailure(err?.response?.data?.message)
+        console.log(err)
       })
+      
   }
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <h2>Order Your Pizza</h2>
       {serverSuccess && <div className='success'>{serverSuccess}</div>}
       {serverFailure && <div className='failure'>{serverFailure}</div>}
-
+      
       <div className="input-group">
         <div>
           <label htmlFor="fullName">Full Name</label><br />
           <input
            placeholder="Type full name" 
-           id="fullName" type="text" 
+           id="fullName" 
+           type="text" 
            value = {values.fullName}
            onChange = {handleChange}
+           name = "fullName" 
           />
         </div>
         {errors.fullName && <div className='error'>{errors.fullName}</div>}
@@ -113,7 +118,7 @@ export default function Form() {
       <div className="input-group">
         <div>
           <label htmlFor="size">Size</label><br />
-          <select id="size"> value={values.size} onChange={handleChange}
+          <select id="size" value={values.size} onChange={handleChange} name="size" >
             <option value="">----Choose Size----</option>
             <option value='S'>Small</option>
             <option value='M'>Mediuml</option>
@@ -124,8 +129,7 @@ export default function Form() {
       </div>
 
       <div className="input-group">
-        {
-          toppings.map(({topping_id, text}) =>(
+        {toppings.map(({topping_id, text}) =>(
             <label key={topping_id}>
             <input
               name={topping_id}
@@ -133,7 +137,8 @@ export default function Form() {
               onChange={handleToppings}
               checked={!!values.toppings.find(t => t == topping_id)}
             />
-            {text}<br />
+            {text}
+            <br />
           </label>
           ))
         }
