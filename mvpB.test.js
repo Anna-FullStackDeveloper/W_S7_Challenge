@@ -9,6 +9,29 @@ describe('Sprint 7 Challenge Learner Tests', () => {
   // Test the following. You can create separate tests or a single test with multiple assertions.
 
     // [1] sum() // throws an error 'pass valid numbers'
+
+    // function sum(a,b){
+    //   if(typeof a !== "number" || typeof b !== "number"){
+    //     throw new Error("pass valid numbers");
+    //   }
+    //   return a + b
+    // }
+    // module.exports = sum;
+    // const sum = require('./sum');
+
+describe('sum function', () => {
+    test('throws an error for non-number arguments', () => {
+        expect(() => sum()).toThrow('pass valid numbers');
+        expect(() => sum(2, 'seven')).toThrow('pass valid numbers');
+    });
+
+    test('returns the correct sum for valid number arguments', () => {
+        expect(sum(1, 3)).toBe(4);
+        expect(sum(1, 2)).toBe(3);
+        expect(sum(10, 3)).toBe(13);
+    });
+});
+
     // [2] sum(2, 'seven') // throws an error 'pass valid numbers'
     // [3] sum(1, 3) // returns 4
     // [4] sum('1', 2) // returns 3
@@ -30,6 +53,8 @@ describe('Sprint 7 Challenge Learner Tests', () => {
   // test('you can comment out this test', () => {
   //   expect(true).toBe(false)
   // })
+
+  
 })
 
 function sum(a, b) {

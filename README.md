@@ -1,3 +1,4 @@
+npm i
 # Sprint 7 Challenge
 
 ## Introduction
